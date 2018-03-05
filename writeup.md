@@ -79,9 +79,9 @@ Here's a [link to my video result](./output_videos/project_video.mp4)
 
 #### 2. Pipeline.
 
-1. Create a function called 'detect' to implement pipeline.
+1. Create a function called `detect` to implement pipeline.
 2. Create a heat map using the raw image.
-3. Add "heat" within 'hot_windows' where a positive detection is identified by the svm classifier.
+3. Add "heat" within `hot_windows` where a positive detection is identified by the svm classifier.
 4. Rejected areas affected by false positives.
 
 I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle. I constructed bounding boxes to cover the area of each blob detected.  
