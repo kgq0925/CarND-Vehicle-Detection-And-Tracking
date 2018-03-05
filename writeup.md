@@ -17,8 +17,9 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/training_example.png
 [image2]: ./output_images/non_vehicle_example.png
 [image3]: ./output_images/hog_example.png
-[image4]: ./output_images/slide_example.png
-[image5]: ./output_images/output.png
+[image4]: ./output_images/slide_window_example.png
+[image5]: ./output_images/slide_example_1.png
+[image6]: ./output_images/output_1.png
 
 ## Rubric Points
 
@@ -66,9 +67,11 @@ I tried to find the best parameters. The result is `C: 0.08`, `penalty: l2` and 
 
 Try different windows size to test the detection accuracy. I finally decided to search window positions at the `window size: (96, 96)`, `overlap:(0.75, 0.75)`, and `Y-space:from 400 to 600`. The code for this step is contained in the 11th and 12th code cell of the IPython notebook.
 
+![alt text][image4]
+
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+![alt text][image5]
 ---
 
 ### Video Implementation
@@ -88,7 +91,7 @@ I then used `scipy.ndimage.measurements.label()` to identify individual blobs in
 
 Here's an example result:
 
-![alt text][image5]
+![alt text][image6]
 
 ---
 
