@@ -46,11 +46,11 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 #### 2. HOG Parameters
 
-'pixels_per_cell': It is chosen based on the scale of the features important to do the classification. A very small size would blow up the size of the feature vector and a very large one may not capture relevant information. 
+`pixels_per_cell`: It is chosen based on the scale of the features important to do the classification. A very small size would blow up the size of the feature vector and a very large one may not capture relevant information. 
 
-'cells_per_block': A large size makes local changes less significant while a smaller block size weights local changes more.
+`cells_per_block`: A large size makes local changes less significant while a smaller block size weights local changes more.
 
-'orientations': It sets the number of bins in the histogram of gradients. The authors of the HOG paper had recommended a value of 9 to capture gradients between 0 and 180 degrees in 20 degrees increments.
+`orientations`: It sets the number of bins in the histogram of gradients. The authors of the HOG paper had recommended a value of 9 to capture gradients between 0 and 180 degrees in 20 degrees increments.
 
 I tried various combinations of parameters and found `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` gave the best result.
 
@@ -58,13 +58,13 @@ I tried various combinations of parameters and found `orientations=9`, `pixels_p
 
 To do this I have chosen Support Vector Machines (SVM) as the classification algorithm. The code for this step is contained in the 10th code cell of the IPython notebook.
 
-I tried to find the best parameters. The result is 'C: 0.08', 'penalty: l2' and 'loss: hinge'.
+I tried to find the best parameters. The result is `C: 0.08`, `penalty: l2` and `loss: hinge`.
 
 ### Sliding Window Search
 
 #### 1. Sliding Window Search
 
-Try different windows size to test the detection accuracy. I finally decided to search window positions at the 'window size: (96, 96)', 'overlap:(0.75, 0.75)', and 'Y:from 400 to 600'. The code for this step is contained in the 11th and 12th code cell of the IPython notebook.
+Try different windows size to test the detection accuracy. I finally decided to search window positions at the `window size: (96, 96)`, `overlap:(0.75, 0.75)`, and `Y-space:from 400 to 600`. The code for this step is contained in the 11th and 12th code cell of the IPython notebook.
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
