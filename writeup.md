@@ -1,7 +1,5 @@
 ## Writeup Template
 
----
-
 **Vehicle Detection Project**
 
 The goals / steps of this project are the following:
@@ -72,15 +70,14 @@ Try different windows size to test the detection accuracy. I finally decided to 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![alt text][image5]
----
 
 ### Video Implementation
 
-#### 1. Final Video Output.
+#### 1. Final Video Output
+
 Here's a [link to my video result](./output_videos/project_video.mp4)
 
-
-#### 2. Pipeline.
+#### 2. Pipeline
 
 1. Create a function called `detect` to implement pipeline.
 2. Create a heat map using the raw image.
@@ -92,8 +89,6 @@ I then used `scipy.ndimage.measurements.label()` to identify individual blobs in
 Here's an example result:
 
 ![alt text][image6]
-
----
 
 ### Discussion
 
