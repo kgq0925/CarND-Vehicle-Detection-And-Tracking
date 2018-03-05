@@ -92,5 +92,5 @@ Here's an example result:
 
 ### Discussion
 
-In this project, I use HOG and special binnings for feature extraction, and Linear SVM classifier was used for object detection. The SVM classifier can dectect vehicle well. But it cost about half an hour to apple the classifier on the 'project_video'. I think the performance is not good. To increase the efficiency of computing, parallel computing method may be a choice. I will all explore the deep learning approach to get a better performence.
+In this project, I use HOG and special binnings for feature extraction, and Linear SVM classifier was used for object detection. The SVM classifier can dectect vehicle well. But it cost about half an hour to apple the classifier on the `project_video`. I think the performance is not good. To increase the efficiency of computing, parallel computing method may be a choice. I will all explore the deep learning approach to get a better performence.
 
