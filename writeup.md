@@ -1,5 +1,4 @@
 ## Writeup Template
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
 ---
 
@@ -15,94 +14,89 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[image1]: ./output_images/training_example.png
+[image2]: ./output_images/non_vehicle_example.png
+[image3]: ./output_images/hog_example.png
+[image4]: ./output_images/slide_example.png
+[image5]: ./output_images/output.png
 
-## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+## Rubric Points
 
----
 ### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 
 ### Histogram of Oriented Gradients (HOG)
 
-#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+#### 1. Load Training Data
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+I started by reading in all the `vehicle` and `non-vehicle` images. The code for this step is contained in the second code cell of the IPython notebook.
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
-
+Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 ![alt text][image1]
+![alt text][image2]
+
+#### 1. Extracted HOG Features
+
+The code for this step is contained in the 4th code cell of the IPython notebook.
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
-
-![alt text][image2]
-
-#### 2. Explain how you settled on your final choice of HOG parameters.
-
-I tried various combinations of parameters and...
-
-#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
-
-I trained a linear SVM using...
-
-### Sliding Window Search
-
-#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
-
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+Here is an example using the `YCrCb` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 ![alt text][image3]
 
-#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. HOG Parameters
+
+'pixels_per_cell': It is chosen based on the scale of the features important to do the classification. A very small size would blow up the size of the feature vector and a very large one may not capture relevant information. 
+
+'cells_per_block': A large size makes local changes less significant while a smaller block size weights local changes more.
+
+'orientations': It sets the number of bins in the histogram of gradients. The authors of the HOG paper had recommended a value of 9 to capture gradients between 0 and 180 degrees in 20 degrees increments.
+
+I tried various combinations of parameters and found `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` gave the best result.
+
+#### 3. Training Model
+
+To do this I have chosen Support Vector Machines (SVM) as the classification algorithm. The code for this step is contained in the 10th code cell of the IPython notebook.
+
+I tried to find the best parameters. The result is 'C: 0.08', 'penalty: l2' and 'loss: hinge'.
+
+### Sliding Window Search
+
+#### 1. Sliding Window Search
+
+Try different windows size to test the detection accuracy. I finally decided to search window positions at the 'window size: (96, 96)', 'overlap:(0.75, 0.75)', and 'Y:from 400 to 600'. The code for this step is contained in the 11th and 12th code cell of the IPython notebook.
+
+![alt text][image4]
+
+#### 2. Example
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+![alt text][image5]
 ---
 
 ### Video Implementation
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+#### 1. Final Video Output.
+Here's a [link to my video result](./output_videos/project_video.mp4)
 
 
-#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Pipeline.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+1. Create a function called 'detect' to implement pipeline.
+2. Create a heat map using the raw image.
+3. Add "heat" within 'hot_windows' where a positive detection is identified by the svm classifier.
+4. Rejected areas affected by false positives.
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle. I constructed bounding boxes to cover the area of each blob detected.  
 
-### Here are six frames and their corresponding heatmaps:
+Here's an example result:
 
 ![alt text][image5]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
-
 
 ---
 
 ### Discussion
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+In this project, I use HOG and special binnings for feature extraction, and Linear SVM classifier was used for object detection. The SVM classifier can dectect vehicle well. But it cost about half an hour to apple the classifier on the 'project_video'. I think the performance is not good. To increase the efficiency of computing, parallel computing method may be a choice. I will all explore the deep learning approach to get a better performence.
 
