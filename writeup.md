@@ -66,13 +66,9 @@ I tried to find the best parameters. The result is 'C: 0.08', 'penalty: l2' and 
 
 Try different windows size to test the detection accuracy. I finally decided to search window positions at the 'window size: (96, 96)', 'overlap:(0.75, 0.75)', and 'Y:from 400 to 600'. The code for this step is contained in the 11th and 12th code cell of the IPython notebook.
 
-![alt text][image4]
-
-#### 2. Example
-
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image5]
+![alt text][image4]
 ---
 
 ### Video Implementation
