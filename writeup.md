@@ -18,8 +18,8 @@ The goals / steps of this project are the following:
 [image2]: ./output_images/non_vehicle_example.png
 [image3]: ./output_images/hog_example.png
 [image4]: ./output_images/slide_window_example.png
-[image5]: ./output_images/slide_example_1.png
-[image6]: ./output_images/output_1.png
+[image5]: ./output_images/slide_example.png
+[image6]: ./output_images/output.png
 
 ## Rubric Points
 
