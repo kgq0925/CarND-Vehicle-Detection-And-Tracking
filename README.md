@@ -73,11 +73,11 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 ### Video Implementation
 
-#### 1. Final Video Output.
+#### 1. Final Video Output
 
 Here's a [link to my video result](./output_videos/project_video.mp4)
 
-#### 2. Pipeline.
+#### 2. Pipeline
 
 1. Create a function called `detect` to implement pipeline.
 2. Create a heat map using the raw image.
